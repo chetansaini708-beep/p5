@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ABC Books - Modern online bookstore for programming, technology, business, fiction and competitive exam books.">
+<title>ABC Books | Online Book Store</title>
+
+<style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+        --primary:#173b67;
+        --primary-dark:#0e2949;
+        --accent:#f4b942;
+        --light:#f6f8fc;
+        --text:#243247;
+        --muted:#6b7788;
+        --white:#fff;
+        --border:#e5e9f0;
+        --shadow:0 12px 35px rgba(19,48,83,.10);
+    }
+    html{scroll-behavior:smooth}
+    body{
+        font-family:Arial,Helvetica,sans-serif;
+        color:var(--text);
+        background:#fff;
+        line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    img{width:100%;display:block}
+    .container{width:min(1180px,92%);margin:auto}
+
+    /* Header */
+    header{
+        position:sticky;top:0;z-index:1000;
+        background:rgba(255,255,255,.96);
+        border-bottom:1px solid var(--border);
+        box-shadow:0 4px 18px rgba(0,0,0,.04);
+    }
+    .nav{
+        min-height:76px;display:flex;align-items:center;
+        justify-content:space-between;gap:25px;
+    }
+    .logo{display:flex;align-items:center;gap:11px;font-size:24px;font-weight:800;color:var(--primary)}
+    .logo-icon{
+        width:42px;height:42px;border-radius:12px;background:var(--primary);
+        color:#fff;display:grid;place-items:center;font-size:22px;
+    }
+    nav{display:flex;align-items:center;gap:25px}
+    nav a{font-size:15px;font-weight:700;color:#475569;transition:.25s}
+    nav a:hover{color:var(--primary)}
+    .nav-btn{background:var(--primary);color:#fff!important;padding:11px 18px;border-radius:9px}
+    .nav-btn:hover{background:var(--primary-dark)}
+
+    /* Hero */
+    .hero{
+        min-height:620px;display:flex;align-items:center;
+        background:
+        linear-gradient(90deg,rgba(8,30,55,.92) 0%,rgba(8,30,55,.72) 48%,rgba(8,30,55,.20) 100%),
+        url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
+        color:#fff;
+    }
+    .hero-content{max-width:680px;padding:80px 0}
+    .eyebrow{
+        display:inline-block;background:rgba(244,185,66,.16);
+        color:#ffd66f;border:1px solid rgba(255,214,111,.35);
+        padding:7px 13px;border-radius:50px;font-size:13px;font-weight:800;
+        text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;
+    }
+    .hero h1{font-size:clamp(42px,6vw,70px);line-height:1.06;margin-bottom:20px}
+    .hero h1 span{color:var(--accent)}
+    .hero p{font-size:18px;color:#e5edf7;max-width:590px;margin-bottom:32px}
+    .hero-buttons{display:flex;gap:13px;flex-wrap:wrap}
+    .btn{
+        display:inline-block;padding:13px 22px;border-radius:9px;
+        font-weight:800;transition:.25s;border:2px solid transparent;
+    }
+    .btn-primary{background:var(--accent);color:#162b43}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(244,185,66,.25)}
+    .btn-outline{border-color:#fff;color:#fff}
+    .btn-outline:hover{background:#fff;color:var(--primary)}
+
+    /* Search */
+    .search-wrap{margin-top:-32px;position:relative;z-index:2}
+    .search-box{
+        background:#fff;padding:12px;border-radius:15px;box-shadow:var(--shadow);
+        display:flex;gap:10px;border:1px solid var(--border);
+    }
+    .search-box input{
+        flex:1;border:0;outline:0;padding:14px;font-size:16px;color:var(--text)
+    }
+    .search-box button{
+        border:0;background:var(--primary);color:#fff;padding:0 25px;
+        border-radius:10px;font-weight:800;cursor:pointer;
+    }
+
+    /* Sections */
+    section{padding:85px 0}
+    .section-head{text-align:center;max-width:720px;margin:0 auto 45px}
+    .section-head .mini{color:#c48b16;font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:1px}
+    .section-head h2{font-size:38px;color:var(--primary);margin:8px 0 12px}
+    .section-head p{color:var(--muted)}
+
+    /* Categories */
+    .categories{background:var(--light)}
+    .category-grid{
+        display:grid;grid-template-columns:repeat(5,1fr);gap:18px;
+    }
+    .category{
+        background:#fff;border:1px solid var(--border);padding:28px 15px;
+        border-radius:14px;text-align:center;transition:.25s;
+    }
+    .category:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:#d5deea}
+    .category .icon{font-size:35px;margin-bottom:10px}
+    .category h3{font-size:17px;color:var(--primary)}
+
+    /* Books */
+    .book-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:23px}
+    .book-card{
+        background:#fff;border:1px solid var(--border);border-radius:15px;
+        overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.04);transition:.25s;
+    }
+    .book-card:hover{transform:translateY(-7px);box-shadow:var(--shadow)}
+    .book-image{height:310px;overflow:hidden;position:relative;background:#eef2f7}
+    .book-image img{height:100%;object-fit:cover;transition:.35s}
+    .book-card:hover .book-image img{transform:scale(1.04)}
+    .badge{
+        position:absolute;top:12px;left:12px;background:var(--accent);
+        color:#1d2d42;padding:5px 9px;border-radius:6px;font-size:12px;font-weight:800;
+    }
+    .book-info{padding:18px}
+    .book-info h3{font-size:18px;color:var(--primary);margin-bottom:4px}
+    .author{font-size:14px;color:var(--muted);margin-bottom:12px}
+    .price-row{display:flex;align-items:center;justify-content:space-between}
+    .price{font-size:20px;font-weight:800;color:#182f4e}
+    .buy-btn{background:var(--primary);color:#fff;padding:9px 13px;border-radius:7px;font-size:13px;font-weight:700}
+    .buy-btn:hover{background:var(--primary-dark)}
+
+    /* Offer */
+    .offer{
+        background:
+        linear-gradient(90deg,rgba(13,39,69,.95),rgba(13,39,69,.74)),
+        url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
+        color:#fff;
+    }
+    .offer-box{display:flex;align-items:center;justify-content:space-between;gap:35px}
+    .offer h2{font-size:42px;line-height:1.1;margin:8px 0 12px}
+    .offer p{color:#dce7f3;max-width:650px}
+    .offer .discount{font-size:18px;color:#ffd76d;font-weight:800}
+
+    /* Features */
+    .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .feature{
+        padding:30px 20px;text-align:center;border:1px solid var(--border);
+        border-radius:14px;background:#fff;
+    }
+    .feature-icon{font-size:34px;margin-bottom:12px}
+    .feature h3{color:var(--primary);margin-bottom:7px}
+    .feature p{color:var(--muted);font-size:14px}
+
+    /* Gallery */
+    .gallery{background:var(--light)}
+    .gallery-grid{
+        display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:220px 220px;
+        gap:15px;
+    }
+    .gallery-item{border-radius:14px;overflow:hidden}
+    .gallery-item:first-child{grid-row:span 2}
+    .gallery-item img{height:100%;object-fit:cover;transition:.35s}
+    .gallery-item:hover img{transform:scale(1.05)}
+
+    /* Newsletter */
+    .newsletter{
+        background:#eef4fa;text-align:center;
+    }
+    .newsletter-box{max-width:760px;margin:auto}
+    .newsletter h2{font-size:34px;color:var(--primary);margin-bottom:10px}
+    .newsletter p{color:var(--muted);margin-bottom:25px}
+    .subscribe{display:flex;max-width:600px;margin:auto;background:#fff;padding:6px;border-radius:10px;border:1px solid var(--border)}
+    .subscribe input{flex:1;border:0;outline:0;padding:13px;font-size:15px}
+    .subscribe button{border:0;background:var(--primary);color:#fff;padding:0 22px;border-radius:7px;font-weight:800;cursor:pointer}
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .contact-card{border:1px solid var(--border);border-radius:14px;padding:25px;background:#fff}
+    .contact-card h3{color:var(--primary);margin-bottom:7px}
+    .contact-card p{color:var(--muted);font-size:15px}
+
+    /* Footer */
+    footer{background:#0d2745;color:#c8d5e4;padding:50px 0 20px}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:35px}
+    .footer-logo{color:#fff;font-size:23px;font-weight:800;margin-bottom:13px}
+    footer h3{color:#fff;font-size:16px;margin-bottom:14px}
+    footer p,footer a{font-size:14px;color:#b9c8d9}
+    footer a{display:block;margin:7px 0}
+    footer a:hover{color:#fff}
+    .copyright{border-top:1px solid rgba(255,255,255,.12);margin-top:35px;padding-top:18px;text-align:center;font-size:13px}
+
+    /* Responsive */
+    @media(max-width:1000px){
+        .category-grid{grid-template-columns:repeat(3,1fr)}
+        .book-grid{grid-template-columns:repeat(2,1fr)}
+        .feature-grid{grid-template-columns:repeat(2,1fr)}
+        .footer-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:760px){
+        nav{display:none}
+        .hero{min-height:560px}
+        section{padding:65px 0}
+        .search-box{flex-direction:column}
+        .search-box button{padding:13px}
+        .category-grid{grid-template-columns:repeat(2,1fr)}
+        .book-grid{grid-template-columns:1fr 1fr}
+        .offer-box{flex-direction:column;align-items:flex-start}
+        .offer h2{font-size:34px}
+        .gallery-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:190px 190px 190px}
+        .gallery-item:first-child{grid-row:span 1;grid-column:span 2}
+        .contact-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:500px){
+        .logo{font-size:20px}
+        .logo-icon{width:38px;height:38px}
+        .hero h1{font-size:42px}
+        .hero p{font-size:16px}
+        .book-grid{grid-template-columns:1fr}
+        .feature-grid{grid-template-columns:1fr}
+        .category-grid{grid-template-columns:1fr 1fr}
+        .footer-grid{grid-template-columns:1fr}
+        .subscribe{flex-direction:column;padding:7px}
+        .subscribe button{padding:12px}
+        .section-head h2{font-size:31px}
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav">
+        <a href="#home" class="logo">
+            <span class="logo-icon">📚</span>
+            ABC Books
+        </a>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#categories">Categories</a>
+            <a href="#books">Books</a>
+            <a href="#offers">Offers</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact" class="nav-btn">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <span class="eyebrow">Your Online Book Destination</span>
+                <h1>Discover Your Next <span>Great Book</span></h1>
+                <p>Explore a carefully selected collection of technology, business, fiction and competitive exam books — all in one place.</p>
+                <div class="hero-buttons">
+                    <a href="#books" class="btn btn-primary">Explore Books →</a>
+                    <a href="#categories" class="btn btn-outline">Browse Categories</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container search-wrap">
+        <div class="search-box">
+            <input id="searchInput" type="search" placeholder="Search books, authors or categories...">
+            <button onclick="searchBooks()">🔍 Search</button>
+        </div>
+    </div>
+
+    <section class="categories" id="categories">
+        <div class="container">
+            <div class="section-head">
+                <div class="mini">Explore</div>
+                <h2>Browse Categories</h2>
+                <p>Find books according to your interests, studies and career goals.</p>
+            </div>
+            <div class="category-grid">
+                <a class="category" href="#books"><div class="icon">💻</div><h3>Programming</h3></a>
+                <a class="category" href="#books"><div class="icon">🖥️</div><h3>Computer Science</h3></a>
+                <a class="category" href="#books"><div class="icon">💼</div><h3>Business</h3></a>
+                <a class="category" href="#books"><div class="icon">📖</div><h3>Fiction</h3></a>
+                <a class="category" href="#books"><div class="icon">🎯</div><h3>Competitive Exams</h3></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="books">
+        <div class="container">
+            <div class="section-head">
+                <div class="mini">Our Collection</div>
+                <h2>Popular Books</h2>
+                <p>Some of our popular titles for students, developers and professionals.</p>
+            </div>
+
+            <div class="book-grid" id="bookGrid">
+                <article class="book-card" data-search="python programming john smith programming">
+                    <div class="book-image">
+                        <span class="badge">Popular</span>
+                        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=700&q=85" alt="Programming book">
+                    </div>
+                    <div class="book-info">
+                        <h3>Python Programming</h3>
+                        <div class="author">John Smith</div>
+                        <div class="price-row"><span class="price">₹450</span><a href="#contact" class="buy-btn">Buy Now</a></div>
+                    </div>
+                </article>
+
+                <article class="book-card" data-search="web technology david brown computer science">
+                    <div class="book-image">
+                        <span class="badge">New</span>
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=85" alt="Web technology book">
+                    </div>
+                    <div class="book-info">
+                        <h3>Web Technology</h3>
+                        <div class="author">David Brown</div>
+                        <div class="price-row"><span class="price">₹500</span><a href="#contact" class="buy-btn">Buy Now</a></div>
+                    </div>
+                </article>
+
+                <article class="book-card" data-search="database management robert lee database">
+                    <div class="book-image">
+                        <span class="badge">Bestseller</span>
+                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=700&q=85" alt="Database management book">
+                    </div>
+                    <div class="book-info">
+                        <h3>Database Management</h3>
+                        <div class="author">Robert Lee</div>
+                        <div class="price-row"><span class="price">₹550</span><a href="#contact" class="buy-btn">Buy Now</a></div>
+                    </div>
+                </article>
+
+                <article class="book-card" data-search="business strategy michael clark business">
+                    <div class="book-image">
+                        <span class="badge">20% Off</span>
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=700&q=85" alt="Business strategy book">
+                    </div>
+                    <div class="book-info">
+                        <h3>Business Strategy</h3>
+                        <div class="author">Michael Clark</div>
+                        <div class="price-row"><span class="price">₹399</span><a href="#contact" class="buy-btn">Buy Now</a></div>
+                    </div>
+                </article>
+            </div>
+
+            <p id="noResults" style="display:none;text-align:center;color:#6b7788;margin-top:25px;">No books found. Try another search.</p>
+        </div>
+    </section>
+
+    <section class="offer" id="offers">
+        <div class="container">
+            <div class="offer-box">
+                <div>
+                    <div class="discount">LIMITED TIME OFFER</div>
+                    <h2>Read More. Save More.</h2>
+                    <p>Get special discounts on selected books and build your personal library without stretching your budget.</p>
+                </div>
+                <a href="#books" class="btn btn-primary">Shop Offers →</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-head">
+                <div class="mini">Why ABC Books</div>
+                <h2>Everything You Need to Read</h2>
+                <p>A simple and reliable online bookstore experience for every reader.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature"><div class="feature-icon">📚</div><h3>Wide Collection</h3><p>Explore books across technology, business, fiction and exams.</p></div>
+                <div class="feature"><div class="feature-icon">🚚</div><h3>Fast Delivery</h3><p>Get your selected books delivered with convenient service.</p></div>
+                <div class="feature"><div class="feature-icon">🔒</div><h3>Secure Shopping</h3><p>Designed with a simple and secure shopping experience in mind.</p></div>
+                <div class="feature"><div class="feature-icon">💰</div><h3>Great Prices</h3><p>Discover useful books at student-friendly prices and offers.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-head">
+                <div class="mini">Bookstore Gallery</div>
+                <h2>A Place for Every Reader</h2>
+                <p>Fresh visuals for a modern, professional bookstore website.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1000&q=85" alt="Large library">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=800&q=85" alt="Books on shelf">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=85" alt="Open book">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=800&q=85" alt="Reading book">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1526243741027-444d633d7365?auto=format&fit=crop&w=800&q=85" alt="Books and coffee">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container newsletter-box">
+            <h2>Stay Updated With ABC Books</h2>
+            <p>Subscribe for new arrivals, useful recommendations and special offers.</p>
+            <form class="subscribe" onsubmit="subscribeUser(event)">
+                <input type="email" id="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="section-head">
+                <div class="mini">Get In Touch</div>
+                <h2>Contact ABC Books</h2>
+                <p>Have a question about a book or an order? Reach out to us.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>📍 Visit Us</h3>
+                    <p>ABC Books, Main Market, Jaipur, Rajasthan, India</p>
+                </div>
+                <div class="contact-card">
+                    <h3>📞 Call Us</h3>
+                    <p>+91 98765 43210<br>+91 87654 32109</p>
+                </div>
+                <div class="contact-card">
+                    <h3>✉️ Email Us</h3>
+                    <p>info@abcbooks.com<br>support@abcbooks.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">📚 ABC Books</div>
+                <p>Your modern online destination for books, learning and inspiration.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#books">Books</a>
+                <a href="#offers">Offers</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div>
+                <h3>Categories</h3>
+                <a href="#books">Programming</a>
+                <a href="#books">Computer Science</a>
+                <a href="#books">Business</a>
+                <a href="#books">Fiction</a>
+            </div>
+            <div>
+                <h3>Customer Support</h3>
+                <p>Mon–Sat: 9:00 AM – 7:00 PM</p>
+                <p>support@abcbooks.com</p>
+            </div>
+        </div>
+        <div class="copyright">© 2026 ABC Books. All Rights Reserved.</div>
+    </div>
+</footer>
+
+<script>
+function searchBooks(){
+    const query = document.getElementById("searchInput").value.toLowerCase().trim();
+    const cards = document.querySelectorAll(".book-card");
+    let found = 0;
+
+    cards.forEach(card => {
+        const text = card.dataset.search.toLowerCase();
+        const show = !query || text.includes(query);
+        card.style.display = show ? "" : "none";
+        if(show) found++;
+    });
+
+    document.getElementById("noResults").style.display = found ? "none" : "block";
+    document.getElementById("books").scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("searchInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter") searchBooks();
+});
+
+function subscribeUser(e){
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    alert("Thank you! " + email + " has been subscribed to ABC Books.");
+    e.target.reset();
+}
+</script>
+
+</body>
+</html>
